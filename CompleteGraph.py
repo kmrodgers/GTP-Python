@@ -1,5 +1,8 @@
 import Node.py
+import Token.py
 import random
+
+MASTER_DATA_PATH = "output_data/master_data.txt"
 
 class CompleteGraph:
 	def __init__(self, gameFormat, numNodes, edgeWeight, numGames, viewGames):
@@ -31,3 +34,38 @@ class CompleteGraph:
 	def getRandomNumber(self, size):
 		return random.randint(1, size)
 
+	def getRandomEdge(self, size):
+		return random.randint(1, size) + 1;
+
+	def playTheGame(self):
+		# Open the file
+		masterData = open(MASTER_DATA_PATH, "w")
+		# Setup the token with the first Node
+		t = Token(nodeList[0])
+		# Variables for random stuff...
+		netRandomWeight = 0
+		edgeSize = 0
+		nextMove = 0
+		# If we are watching the game
+		if watch:
+			# Write to file
+			master_data.write(t.getTokenLocation().getName(), "-")
+			# Play the game
+			while (true):
+				# If it's player 2's turn
+				if t.getCurrentPlayerTurn() == 2:
+					netMove = getRandomNumber(t.getTokenLocation().getEdgeListSize())
+					nextMoveNode = t.getTokenLocation().getNodeAtElement(nextMove)
+					edgeSize = t.getTokenLocation().getWeight(nextMoveNode)
+					nextRandomWeight = getRandomEdge(edgeSize)
+				else:
+					nextMoveNode = t.getTokenLocation().getMinimalDegreeNode()
+					nextRandomWeight = t.getTokenLocation().getWeight(nextMoveNode)
+				if nextRandomWeight > 0:
+					master_data.write(nextRandomWeight, "-")
+					t.getTokenLocation().removeEdgeWeight(nextMoveNode, nextRandomWeight)
+					nextModeNode.removeEdgeWeight(t.getTokenLocation(), nextRandomWeight)
+					
+
+
+			
